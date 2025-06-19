@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Game" ALTER COLUMN "releaseYear" DROP NOT NULL,
+ALTER COLUMN "labelCode" DROP NOT NULL,
+ALTER COLUMN "region" DROP NOT NULL;
