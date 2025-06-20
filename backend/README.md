@@ -44,7 +44,7 @@ npm run db:migrate
 
 ### 5. Seed the Database (Optional)
 
-To populate the database with 100 retro games:
+To populate the database with an AI-generated list of retro games:
 
 ```bash
 npm run db:seed

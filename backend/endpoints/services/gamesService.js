@@ -1,13 +1,29 @@
 import gamesRepository from '../repositories/gamesRepository.js';
 
 async function getGames() {
-  // Add business logic here if needed
   return gamesRepository.getAllGames();
 }
 
+async function getGameById(id) {
+  return gamesRepository.getGameById(id);
+}
+
 async function createGame(gameData) {
-  // Add business logic/validation here if needed
   return gamesRepository.createGame(gameData);
 }
 
-export default { getGames, createGame }; 
+async function updateGameById(id, gameData) {
+  return gamesRepository.updateGameById(id, gameData);
+}
+
+async function deleteGameById(id) {
+  return gamesRepository.deleteGameById(id);
+}
+
+export default {
+  getGames,
+  getGameById,
+  createGame,
+  updateGameById,
+  deleteGameById,
+};
