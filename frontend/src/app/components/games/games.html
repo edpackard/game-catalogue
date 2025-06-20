@@ -1,0 +1,10 @@
+<div *ngIf="loading">Loading games...</div>
+<div *ngIf="error" style="color: red;">{{ error }}</div>
+<div *ngIf="!loading && !error && games.length" class="games-grid-container">
+  <ul class="games-grid">
+    <li *ngFor="let game of games">
+      <strong [routerLink]="['/games', game.id]" style="cursor:pointer;">{{ game.title }}</strong>
+    </li>
+  </ul>
+</div>
+<div *ngIf="!loading && !error && !games.length">No games found.</div>

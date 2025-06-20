@@ -1,0 +1,29 @@
+<div class="game-detail-container">
+  <div *ngIf="loading">Loading game details...</div>
+  <div *ngIf="success" style="color: green; text-align: center; margin-bottom: 1em;">{{ success }}</div>
+  <div *ngIf="error" style="color: red;">{{ error }}</div>
+  <div *ngIf="!loading && !error && game">
+    <h2>{{ game.title }}</h2>
+    <table class="game-detail-table">
+      <tr>
+        <td><strong>Release Year:</strong></td>
+        <td>{{ game.releaseYear || '-' }}</td>
+      </tr>
+      <tr>
+        <td><strong>Label Code:</strong></td>
+        <td>{{ game.labelCode || '-' }}</td>
+      </tr>
+      <tr>
+        <td><strong>Region:</strong></td>
+        <td>{{ game.region || '-' }}</td>
+      </tr>
+    </table>
+    <button class="update-btn" [routerLink]="['/games', game.id, 'update']">Update Game</button>
+    <button class="delete-btn" (click)="onDelete()">Delete Game</button>
+    <div *ngIf="showDeleteConfirm" class="delete-confirm">
+      <span>Are you sure?</span>
+      <button class="yes-btn" (click)="confirmDelete()">Yes</button>
+      <button class="no-btn" (click)="cancelDelete()">No</button>
+    </div>
+  </div>
+</div>
