@@ -26,6 +26,45 @@ async function getGameById(req, res) {
   }
 }
 
+async function getAiGameReviewById(req, res) {
+  try {
+    const game = await gamesService.getGameById(req.params.id);
+    if (!game) {
+      console.warn(`[GET] /games/${req.params.id}/ai-review - Not found`);
+      return res.status(404).json({ error: 'Game not found.' });
+    }
+
+    const aiGameReview = await gamesService.getAiGameReview(game);
+    console.log(
+      `[GET] /games/${req.params.id}/ai-review - Generated game review.`
+    );
+
+    res.json(aiGameReview);
+  } catch (error) {
+    console.error(`[GET] /games/${req.params.id}/ai-review - Error:`, error);
+    res.status(500).json({ error: 'Failed to generate game review.' });
+  }
+}
+
+async function getAiGenreById(req, res) {
+  try {
+    const game = await gamesService.getGameById(req.params.id);
+    if (!game) {
+      console.warn(`[GET] /games/${req.params.id}/ai-genre - Not found`);
+      return res.status(404).json({ error: 'Game not found.' });
+    }
+    const aiGameGenre = await gamesService.getAiGameGenre(game);
+    console.log(
+      `[GET] /games/${req.params.id}/ai-genre - Generated game genre.`
+    );
+
+    res.json(aiGameGenre);
+  } catch (error) {
+    console.error(`[GET] /games/${req.params.id}/ai-genre - Error:`, error);
+    res.status(500).json({ error: 'Failed to generate game genre.' });
+  }
+}
+
 async function createGame(req, res) {
   const { title, releaseYear, labelCode, region } = req.body;
   if (!title) {
@@ -37,7 +76,7 @@ async function createGame(req, res) {
       title,
       releaseYear: releaseYear ?? null,
       labelCode: labelCode ?? null,
-      region: region ?? null
+      region: region ?? null,
     });
     console.log(`[POST] /games - Created game with ID ${game.id}`);
     res.status(201).json(game);
@@ -77,4 +116,12 @@ async function deleteGameById(req, res) {
   }
 }
 
-export { getGames, getGameById, createGame, updateGameById, deleteGameById }; 
+export {
+  getGames,
+  getGameById,
+  getAiGameReviewById,
+  getAiGenreById,
+  createGame,
+  updateGameById,
+  deleteGameById,
+};
