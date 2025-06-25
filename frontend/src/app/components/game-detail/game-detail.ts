@@ -65,7 +65,7 @@ export class GameDetail implements OnInit {
     this.deleting = true;
     this.http.delete(`http://localhost:3001/games/${this.game.id}`).subscribe({
       next: () => {
-        this.router.navigate(['/games']);
+        this.router.navigate(['/games'], { state: { success: 'Game deleted successfully!' } });
       },
       error: (err) => {
         this.deleting = false;

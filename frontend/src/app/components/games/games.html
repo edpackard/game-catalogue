@@ -1,3 +1,4 @@
+<div *ngIf="success" class="status-message" style="color: green; text-align: center; margin-bottom: 1em; font-weight: 500; font-size: 1.1rem;">{{ success }}</div>
 <div *ngIf="loading">Loading games...</div>
 <div *ngIf="error" style="color: red;">{{ error }}</div>
 <div *ngIf="!loading && !error && games.length" class="games-grid-container">

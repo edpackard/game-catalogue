@@ -47,7 +47,9 @@
     <label for="gameConsoleId">Game Console</label>
     <select id="gameConsoleId" formControlName="gameConsoleId" required>
       <option value="">Select a console</option>
-      <option *ngFor="let console of gameConsoles" [value]="console.id">{{ console.name }}</option>
+      <option *ngFor="let console of gameConsoles" [value]="console.id">
+        {{ console.name }}
+      </option>
     </select>
     <div
       *ngIf="gameForm.get('gameConsoleId')?.invalid && gameForm.get('gameConsoleId')?.touched"
@@ -57,7 +59,7 @@
     </div>
   </div>
 
-  <button type="submit" [disabled]="submitting">Update Game</button>
+  <button type="submit" [disabled]="submitting">Save Update</button>
 
   <div *ngIf="success" class="status-message" style="color: green">
     {{ success }}

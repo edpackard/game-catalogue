@@ -14,11 +14,23 @@ export class Games implements OnInit {
   public games: any[] = [];
   public loading = true;
   public error: string | null = null;
+  public success: string | null = null;
 
   constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    // Read navigation state for messages (works after redirect)
+    const { success } = history.state;
+    if (success) this.success = success;
+    if (success) {
+      setTimeout(() => {
+        this.success = null;
+        // Clear state from browser history so reload doesn't show it again
+        window.history.replaceState({}, '', window.location.pathname);
+        this.cdr.detectChanges();
+      }, 3000);
+    }
     this.http.get<any[]>('http://localhost:3001/games').subscribe({
       next: (data) => {
         this.games = data.sort((a, b) => {
