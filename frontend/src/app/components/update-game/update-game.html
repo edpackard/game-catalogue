@@ -47,12 +47,7 @@
     <label for="gameConsoleId">Game Console</label>
     <select id="gameConsoleId" formControlName="gameConsoleId" required>
       <option value="">Select a console</option>
-      <option value="1">NES</option>
-      <option value="2">SNES</option>
-      <option value="3">N64</option>
-      <option value="4">Game Boy</option>
-      <option value="5">Genesis</option>
-      <option value="6">Arcade</option>
+      <option *ngFor="let console of gameConsoles" [value]="console.id">{{ console.name }}</option>
     </select>
     <div
       *ngIf="gameForm.get('gameConsoleId')?.invalid && gameForm.get('gameConsoleId')?.touched"

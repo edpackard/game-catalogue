@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { getGameConsoles, GameConsole } from '../../utils/gameConsoles';
 
 @Component({
   selector: 'app-update-game',
@@ -17,6 +18,7 @@ export class UpdateGame implements OnInit {
   success: string | null = null;
   error: string | null = null;
   loading = true;
+  gameConsoles: GameConsole[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +37,7 @@ export class UpdateGame implements OnInit {
   }
 
   ngOnInit() {
+    this.loadGameConsoles();
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) {
       this.error = 'No game ID provided.';
@@ -48,7 +51,8 @@ export class UpdateGame implements OnInit {
           title: game.title,
           releaseYear: game.releaseYear ?? '',
           labelCode: game.labelCode ?? '',
-          region: game.region ?? ''
+          region: game.region ?? '',
+          gameConsoleId: game.gameConsoleId ?? ''
         });
         this.loading = false;
         this.cdr.detectChanges();
@@ -58,6 +62,12 @@ export class UpdateGame implements OnInit {
         this.cdr.detectChanges();
         this.router.navigate(['/problem'], { state: { errorCode: err.status } });
       }
+    });
+  }
+
+  loadGameConsoles() {
+    getGameConsoles(this.http, this.cdr, (consoles) => {
+      this.gameConsoles = consoles;
     });
   }
 
