@@ -42,14 +42,18 @@
     </div>
   </div>
 
-  <div>
-    <label for="primaryGenre">Genre (primary)</label>
-    <input id="primaryGenre" formControlName="primaryGenre" />
-  </div>
-  <div>
-    <label for="secondaryGenre">Genre (secondary)</label>
-    <input id="secondaryGenre" formControlName="secondaryGenre" />
-  </div>
+  <table class="genre-table">
+    <tr>
+      <th>Genre (primary)</th>
+      <th>Genre (secondary)</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td><input id="primaryGenre" formControlName="primaryGenre" /></td>
+      <td><input id="secondaryGenre" formControlName="secondaryGenre" /></td>
+      <td><button type="button" class="genre-ai-btn">AI</button></td>
+    </tr>
+  </table>
 
   <div>
     <label for="labelCode">Label Code</label>
