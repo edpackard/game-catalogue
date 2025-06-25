@@ -66,10 +66,14 @@ async function getAiGenreById(req, res) {
 }
 
 async function createGame(req, res) {
-  const { title, releaseYear, labelCode, region } = req.body;
+  const { title, releaseYear, labelCode, region, gameConsoleId } = req.body;
   if (!title) {
     console.warn(`[POST] /games - Missing title`);
     return res.status(400).json({ error: 'Title is required.' });
+  }
+  if (!gameConsoleId) {
+    console.warn(`[POST] /games - Missing gameConsoleId`);
+    return res.status(400).json({ error: 'Game console is required.' });
   }
   try {
     const game = await gamesService.createGame({
@@ -77,6 +81,7 @@ async function createGame(req, res) {
       releaseYear: releaseYear ?? null,
       labelCode: labelCode ?? null,
       region: region ?? null,
+      gameConsoleId: Number(gameConsoleId),
     });
     console.log(`[POST] /games - Created game with ID ${game.id}`);
     res.status(201).json(game);
@@ -88,7 +93,14 @@ async function createGame(req, res) {
 
 async function updateGameById(req, res) {
   try {
-    const updated = await gamesService.updateGameById(req.params.id, req.body);
+    const updateData = { ...req.body };
+    if (updateData.gameConsoleId) {
+      updateData.gameConsoleId = Number(updateData.gameConsoleId);
+    }
+    const updated = await gamesService.updateGameById(
+      req.params.id,
+      updateData
+    );
     console.log(`[PUT] /games/${req.params.id} - Updated game`);
     res.json(updated);
   } catch (error) {

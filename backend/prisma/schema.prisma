@@ -7,12 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model GameConsole {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(25)
+  manufacturer String   @db.VarChar(25)
+  games        Game[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
 model Game {
-  id          Int     @id @default(autoincrement())
-  title       String
-  releaseYear Int?
-  labelCode   String?
-  region      String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             Int         @id @default(autoincrement())
+  title          String
+  releaseYear    Int?
+  labelCode      String?
+  region         String?
+  gameConsoleId  Int
+  gameConsole    GameConsole @relation(fields: [gameConsoleId], references: [id])
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
 } 

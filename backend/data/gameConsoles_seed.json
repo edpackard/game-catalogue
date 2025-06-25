@@ -1,0 +1,8 @@
+[
+  {"name": "NES", "manufacturer": "Nintendo"},
+  {"name": "SNES", "manufacturer": "Nintendo"},
+  {"name": "N64", "manufacturer": "Nintendo"},
+  {"name": "Game Boy", "manufacturer": "Nintendo"},
+  {"name": "Genesis", "manufacturer": "Sega"},
+  {"name": "Arcade", "manufacturer": "Various"}
+] 
