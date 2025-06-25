@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { GameConsole, getGameConsoles } from '../../utils/gameConsoles';
+import { capitaliseString } from '../../utils/capitalise-string';
 
 @Component({
   selector: 'app-game-form',
@@ -23,6 +24,8 @@ export class GameFormComponent implements OnInit, OnChanges {
   gameForm: FormGroup;
   gameConsoles: GameConsole[] = [];
   submitAttempted = false;
+  aiGenreError: string | null = null;
+  aiGenreLoading = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private cdr: ChangeDetectorRef) {
     this.gameForm = this.fb.group({
@@ -62,5 +65,39 @@ export class GameFormComponent implements OnInit, OnChanges {
       return;
     }
     this.formSubmit.emit(this.gameForm.value);
+  }
+
+  onAiGenre() {
+    this.aiGenreError = null;
+    const title = this.gameForm.get('title')?.value?.trim();
+    const releaseYear = this.gameForm.get('releaseYear')?.value;
+    const gameConsoleId = this.gameForm.get('gameConsoleId')?.value;
+    let gameConsoleName = '';
+    if (gameConsoleId) {
+      const found = this.gameConsoles.find(c => String(c.id) === String(gameConsoleId));
+      if (found) gameConsoleName = found.name;
+    }
+    if (!title) {
+      this.aiGenreError = 'Title is required to generate genres';
+      return;
+    }
+    this.aiGenreLoading = true;
+    let params = `?title=${encodeURIComponent(title)}`;
+    if (releaseYear) params += `&releaseYear=${encodeURIComponent(releaseYear)}`;
+    if (gameConsoleName) params += `&gameConsole=${encodeURIComponent(gameConsoleName)}`;
+    this.http.get<any>(`http://localhost:3001/ai/genres${params}`).subscribe({
+      next: (res) => {
+        this.gameForm.patchValue({
+          primaryGenre: capitaliseString(res.primary_genre) || '',
+          secondaryGenre: capitaliseString(res.secondary_genre) || ''
+        });
+        this.aiGenreLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.aiGenreLoading = false;
+        window.location.assign('/problem');
+      }
+    });
   }
 } 

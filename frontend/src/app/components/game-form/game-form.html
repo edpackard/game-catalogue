@@ -51,9 +51,13 @@
     <tr>
       <td><input id="primaryGenre" formControlName="primaryGenre" /></td>
       <td><input id="secondaryGenre" formControlName="secondaryGenre" /></td>
-      <td><button type="button" class="genre-ai-btn">AI</button></td>
+      <td>
+        <button *ngIf="!aiGenreLoading" type="button" class="genre-ai-btn" (click)="onAiGenre()">AI</button>
+        <span *ngIf="aiGenreLoading" class="genre-spinner"></span>
+      </td>
     </tr>
   </table>
+  <div *ngIf="aiGenreError" class="validation-error" style="margin-top: -1rem; margin-bottom: 1.5rem;">{{ aiGenreError }}</div>
 
   <div>
     <label for="labelCode">Label Code</label>
