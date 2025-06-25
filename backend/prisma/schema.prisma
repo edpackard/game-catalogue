@@ -18,10 +18,12 @@ model GameConsole {
 
 model Game {
   id             Int         @id @default(autoincrement())
-  title          String
+  title          String      
   releaseYear    Int?
-  labelCode      String?
-  region         String?
+  labelCode      String?     @db.VarChar(25)
+  region         String?     @db.VarChar(25)
+  primaryGenre   String?     @db.VarChar(50)
+  secondaryGenre String?     @db.VarChar(50)
   gameConsoleId  Int
   gameConsole    GameConsole @relation(fields: [gameConsoleId], references: [id])
   createdAt      DateTime    @default(now())

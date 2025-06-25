@@ -1,6 +1,6 @@
 import gamesService from '../services/gamesService.js';
 
-async function getGames(req, res) {
+async function getGames(_, res) {
   try {
     const games = await gamesService.getGames();
     console.log(`[GET] /games - Fetched all games (${games.length})`);
@@ -66,7 +66,15 @@ async function getAiGenreById(req, res) {
 }
 
 async function createGame(req, res) {
-  const { title, releaseYear, labelCode, region, gameConsoleId } = req.body;
+  const {
+    title,
+    releaseYear,
+    labelCode,
+    region,
+    primaryGenre,
+    secondaryGenre,
+    gameConsoleId,
+  } = req.body;
   if (!title) {
     console.warn(`[POST] /games - Missing title`);
     return res.status(400).json({ error: 'Title is required.' });
@@ -81,6 +89,8 @@ async function createGame(req, res) {
       releaseYear: releaseYear ?? null,
       labelCode: labelCode ?? null,
       region: region ?? null,
+      primaryGenre: primaryGenre ?? null,
+      secondaryGenre: secondaryGenre ?? null,
       gameConsoleId: Number(gameConsoleId),
     });
     console.log(`[POST] /games - Created game with ID ${game.id}`);
