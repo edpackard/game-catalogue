@@ -30,9 +30,10 @@ Create a `.env` file in the `backend` directory with the following content:
 ```
 DATABASE_URL=postgresql://<user>:<password>@<host>:<port>/<database>
 PORT=3001
+OPENAI_API_KEY=<your API key>
 ```
 
-Replace `<user>`, `<password>`, `<host>`, `<port>`, and `<database>` with your PostgreSQL credentials.
+For DATABASE_URL, replace `<user>`, `<password>`, `<host>`, `<port>`, and `<database>` with your PostgreSQL credentials.
 
 ### 4. Run Database Migrations
 
@@ -60,6 +61,7 @@ The server will start on `http://localhost:3001` by default.
 
 ## Project Structure
 
+- `ai/` - All LLM functionality, including prompts and structured output schemas
 - `endpoints/` — All routes, controllers, services, and repositories
 - `data/` — Seed script and seed data
 - `prisma/` — Prisma schema and migrations
