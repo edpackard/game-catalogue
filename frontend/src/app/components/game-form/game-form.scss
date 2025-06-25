@@ -20,16 +20,7 @@ label {
   font-weight: 500;
 }
 
-input {
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  box-sizing: border-box;
-}
-
-select {
+input, select {
   width: 100%;
   padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
@@ -81,4 +72,4 @@ button[type="submit"]:hover:not(:disabled) {
   color: #d32f2f;
   font-size: 0.98rem;
   margin-top: 0.3em;
-}
+} 
