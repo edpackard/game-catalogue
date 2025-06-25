@@ -6,6 +6,10 @@
     <h2>{{ game.title }}</h2>
     <table class="game-detail-table">
       <tr>
+        <td><strong>Game Console:</strong></td>
+        <td>{{ game.gameConsole?.name || '-' }}</td>
+      </tr>
+      <tr>
         <td><strong>Release Year:</strong></td>
         <td>{{ game.releaseYear || '-' }}</td>
       </tr>
