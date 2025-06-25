@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -27,9 +27,10 @@ export class UpdateGame implements OnInit {
   ) {
     this.gameForm = this.fb.group({
       title: ['', Validators.required],
-      releaseYear: [''],
+      releaseYear: ['', [Validators.pattern('^[0-9]*$')]],
       labelCode: [''],
       region: [''],
+      gameConsoleId: ['', Validators.required],
     });
   }
 
@@ -53,9 +54,9 @@ export class UpdateGame implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        this.error = err.error?.error || 'Failed to fetch game.';
         this.loading = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/problem'], { state: { errorCode: err.status } });
       }
     });
   }
@@ -63,20 +64,26 @@ export class UpdateGame implements OnInit {
   onSubmit() {
     this.success = null;
     this.error = null;
-    if (this.gameForm.invalid) return;
+  if (this.gameForm.invalid) {
+      this.gameForm.markAllAsTouched();
+      return;
+    }  
     this.submitting = true;
     const id = this.route.snapshot.paramMap.get('id');
     const formValue = { ...this.gameForm.value };
     formValue.releaseYear = formValue.releaseYear ? Number(formValue.releaseYear) : null;
+    formValue.gameConsoleId = Number(formValue.gameConsoleId);
+ 
     this.http.put(`http://localhost:3001/games/${id}`, formValue).subscribe({
       next: () => {
         this.submitting = false;
+        this.gameForm.reset();
+        this.cdr.detectChanges();
         this.router.navigate([`/games/${id}`], { state: { success: 'Game updated successfully!' } });
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         this.submitting = false;
-        this.router.navigate([`/games/${id}`], { state: { error: err.error?.error || 'Failed to update game.' } });
-        this.cdr.detectChanges();
+        this.router.navigate(['/problem'], { state: { errorCode: err.status } });
       }
     });
   }

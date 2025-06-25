@@ -48,9 +48,9 @@ export class GameDetail implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        this.error = this.error || err.error?.error || 'Failed to fetch game.';
         this.loading = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/problem'], { state: { errorCode: err.status } });
       }
     });
   }
@@ -68,9 +68,9 @@ export class GameDetail implements OnInit {
         this.router.navigate(['/games']);
       },
       error: (err) => {
-        this.error = err.error?.error || 'Failed to delete game.';
         this.deleting = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/problem'], { state: { errorCode: err.status } });
       }
     });
   }

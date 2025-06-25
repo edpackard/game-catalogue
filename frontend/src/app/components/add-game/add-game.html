@@ -2,15 +2,26 @@
   <div>
     <label for="title">Title</label>
     <input id="title" formControlName="title" required />
-    <div *ngIf="gameForm.get('title')?.invalid && gameForm.get('title')?.touched" class="validation-error">
+    <div
+      *ngIf="gameForm.get('title')?.invalid && gameForm.get('title')?.touched"
+      class="validation-error"
+    >
       Title is required.
     </div>
   </div>
 
   <div>
     <label for="releaseYear">Release Year</label>
-    <input id="releaseYear" formControlName="releaseYear" inputmode="numeric" pattern="[0-9]*" />
-    <div *ngIf="gameForm.get('releaseYear')?.invalid && gameForm.get('releaseYear')?.touched" class="validation-error">
+    <input
+      id="releaseYear"
+      formControlName="releaseYear"
+      inputmode="numeric"
+      pattern="[0-9]*"
+    />
+    <div
+      *ngIf="gameForm.get('releaseYear')?.invalid && gameForm.get('releaseYear')?.touched"
+      class="validation-error"
+    >
       Release year must be a number (digits only).
     </div>
   </div>
@@ -25,9 +36,32 @@
     <input id="region" formControlName="region" />
   </div>
 
+  <div>
+    <label for="gameConsoleId">Game Console</label>
+    <select id="gameConsoleId" formControlName="gameConsoleId" required>
+      <option value="">Select a console</option>
+      <option value="1">NES</option>
+      <option value="2">SNES</option>
+      <option value="3">N64</option>
+      <option value="4">Game Boy</option>
+      <option value="5">Genesis</option>
+      <option value="6">Arcade</option>
+    </select>
+    <div
+      *ngIf="gameForm.get('gameConsoleId')?.invalid && gameForm.get('gameConsoleId')?.touched"
+      class="validation-error"
+    >
+      Game console is required.
+    </div>
+  </div>
+
   <div class="form-actions">
-    <button type="submit" [disabled]="gameForm.invalid || submitting">Add Game</button>
-    <div *ngIf="success" class="status-message" style="color: green;">{{ success }}</div>
-    <div *ngIf="error" class="status-message" style="color: red;">{{ error }}</div>
+    <button type="submit" [disabled]="submitting">Add Game</button>
+    <div *ngIf="success" class="status-message" style="color: green">
+      {{ success }}
+    </div>
+    <div *ngIf="error" class="status-message" style="color: red">
+      {{ error }}
+    </div>
   </div>
 </form>

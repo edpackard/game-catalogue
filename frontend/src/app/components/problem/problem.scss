@@ -1,0 +1,13 @@
+.problem-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: #b71c1c;
+  text-align: center;
+}
+
+.problem-container h2 {
+  margin-bottom: 1rem;
+} 

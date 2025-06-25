@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-games',
@@ -15,7 +15,7 @@ export class Games implements OnInit {
   public loading = true;
   public error: string | null = null;
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
+  constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -29,9 +29,9 @@ export class Games implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        this.error = err.error?.error || 'Failed to fetch games.';
         this.loading = false;
         this.cdr.detectChanges();
+        this.router.navigate(['/problem'], { state: { errorCode: err.status } });
       }
     });
   }
