@@ -31,6 +31,8 @@ export class GameFormComponent implements OnInit, OnChanges {
       labelCode: [''],
       region: [''],
       gameConsoleId: ['', Validators.required],
+      primaryGenre: [''],
+      secondaryGenre: [''],
     });
   }
 

@@ -48,7 +48,9 @@ export class UpdateGame implements OnInit {
           releaseYear: game.releaseYear ?? '',
           labelCode: game.labelCode ?? '',
           region: game.region ?? '',
-          gameConsoleId: game.gameConsoleId ?? ''
+          gameConsoleId: game.gameConsoleId ?? '',
+          primaryGenre: game.primaryGenre ?? '',
+          secondaryGenre: game.secondaryGenre ?? ''
         };
         this.loading = false;
         this.cdr.detectChanges();
@@ -69,6 +71,8 @@ export class UpdateGame implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     formValue.releaseYear = formValue.releaseYear ? Number(formValue.releaseYear) : null;
     formValue.gameConsoleId = Number(formValue.gameConsoleId);
+    formValue.primaryGenre = formValue.primaryGenre || '';
+    formValue.secondaryGenre = formValue.secondaryGenre || '';
     this.http.put(`http://localhost:3001/games/${id}`, formValue).subscribe({
       next: () => {
         this.submitting = false;

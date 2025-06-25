@@ -30,6 +30,8 @@ export class AddGame {
     this.submitting = true;
     formValue.releaseYear = formValue.releaseYear ? Number(formValue.releaseYear) : null;
     formValue.gameConsoleId = Number(formValue.gameConsoleId);
+    formValue.primaryGenre = formValue.primaryGenre || '';
+    formValue.secondaryGenre = formValue.secondaryGenre || '';
     this.http.post<any>('http://localhost:3001/games', formValue).subscribe({
       next: (game) => {
         this.router.navigate([`/games/${game.id}`], { state: { success: 'Game added successfully!' } });
