@@ -2,7 +2,7 @@
   <div>
     <label for="title">Title</label>
     <input id="title" formControlName="title" required />
-    <div *ngIf="gameForm.get('title')?.invalid && gameForm.get('title')?.touched" class="validation-error">
+    <div *ngIf="gameForm.get('title')?.invalid && submitAttempted" class="validation-error">
       Title is required.
     </div>
   </div>
@@ -10,7 +10,7 @@
   <div>
     <label for="releaseYear">Release Year</label>
     <input id="releaseYear" formControlName="releaseYear" inputmode="numeric" pattern="[0-9]*" />
-    <div *ngIf="gameForm.get('releaseYear')?.invalid && gameForm.get('releaseYear')?.touched" class="validation-error">
+    <div *ngIf="gameForm.get('releaseYear')?.invalid && submitAttempted" class="validation-error">
       Release year must be a number (digits only).
     </div>
   </div>
@@ -31,7 +31,7 @@
       <option value="">Select a console</option>
       <option *ngFor="let console of gameConsoles" [value]="console.id">{{ console.name }}</option>
     </select>
-    <div *ngIf="gameForm.get('gameConsoleId')?.invalid && gameForm.get('gameConsoleId')?.touched" class="validation-error">
+    <div *ngIf="gameForm.get('gameConsoleId')?.invalid && submitAttempted" class="validation-error">
       Game console is required.
     </div>
   </div>

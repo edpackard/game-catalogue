@@ -22,6 +22,7 @@ export class GameFormComponent implements OnInit, OnChanges {
 
   gameForm: FormGroup;
   gameConsoles: GameConsole[] = [];
+  submitAttempted = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private cdr: ChangeDetectorRef) {
     this.gameForm = this.fb.group({
@@ -53,6 +54,7 @@ export class GameFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
+    this.submitAttempted = true;
     if (this.gameForm.invalid) {
       this.gameForm.markAllAsTouched();
       return;
